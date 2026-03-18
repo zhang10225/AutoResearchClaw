@@ -1,0 +1,129 @@
+project:
+  name: "iov-abe-security"
+  mode: "full-auto"
+
+research:
+  topic: "Edge-Assisted Accountable Anonymous Authentication and Dual-Revocation CP-ABE for Privacy-Preserving Data Distribution in Internet of Vehicles"
+  domains:
+    - "cryptography"
+    - "security"
+    - "privacy"
+    - "vehicular-networks"
+    - "edge-computing"
+    - "authentication"
+    - "attribute-based-encryption"
+    - "internet-of-things"
+  daily_paper_count: 15
+  quality_threshold: 4.5
+
+runtime:
+  timezone: "Asia/Shanghai"
+  max_parallel_tasks: 3
+  approval_timeout_hours: 12
+  retry_limit: 2
+
+notifications:
+  channel: "console"
+  target: ""
+  on_stage_start: true
+  on_stage_fail: true
+  on_gate_required: true
+
+knowledge_base:
+  backend: "markdown"
+  root: "docs/kb"
+
+openclaw_bridge:
+  use_cron: false
+  use_message: false
+  use_memory: false
+  use_sessions_spawn: false
+  use_web_fetch: false
+  use_browser: false
+
+llm:
+  provider: "openai-compatible"
+  base_url: "https://api.openai.com/v1"
+  api_key_env: "OPENAI_API_KEY"
+  api_key: ""
+  primary_model: "gpt-4o"
+  fallback_models:
+    - "gpt-4.1"
+    - "gpt-4o-mini"
+
+security:
+  hitl_required_stages: [5, 9, 20]
+  allow_publish_without_approval: false
+  redact_sensitive_logs: true
+
+experiment:
+  # Benchmark CP-ABE operations, authentication protocol latency, and revocation
+  # efficiency using pure-Python / NumPy simulations — no GPU required.
+  mode: "sandbox"
+  time_budget_sec: 300
+  max_iterations: 10
+  metric_key: "primary_metric"
+  metric_direction: "minimize"
+  sandbox:
+    python_path: ".venv/bin/python3"
+    gpu_required: false
+    max_memory_mb: 4096
+    allowed_imports:
+      - "numpy"
+      - "scipy"
+      - "matplotlib"
+      - "json"
+      - "time"
+      - "os"
+      - "sys"
+      - "math"
+      - "random"
+      - "hashlib"
+      - "hmac"
+      - "secrets"
+      - "struct"
+      - "collections"
+      - "itertools"
+      - "functools"
+      - "typing"
+      - "dataclasses"
+      - "pathlib"
+      - "csv"
+      - "statistics"
+      - "abc"
+      - "enum"
+
+  figure_agent:
+    enabled: true
+    min_figures: 3
+    max_figures: 10
+    max_iterations: 3
+    render_timeout_sec: 30
+    docker_image: "researchclaw/experiment:latest"
+    output_format: "python"
+    nano_banana_enabled: true
+    gemini_model: "gemini-2.5-flash-image"
+    strict_mode: false
+    dpi: 300
+
+prompts:
+  custom_file: ""
+
+metaclaw_bridge:
+  enabled: false
+  proxy_url: "http://localhost:30000"
+  skills_dir: "~/.metaclaw/skills"
+  fallback_url: ""
+  fallback_api_key: ""
+  prm:
+    enabled: false
+    api_base: ""
+    api_key_env: "PRM_API_KEY"
+    api_key: ""
+    model: "gpt-5.4"
+    votes: 3
+    gate_stages: [5, 9, 15, 20]
+  lesson_to_skill:
+    enabled: true
+    min_severity: "error"
+    max_skills_per_run: 3
